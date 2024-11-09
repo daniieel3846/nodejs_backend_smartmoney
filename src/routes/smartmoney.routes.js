@@ -55,7 +55,7 @@ router.post('/api/CuentasBancarias/Save', cors({
     origin: 'http://localhost:8081'
 }),crearCuentaBancaria);
 
-router.delete('/api/CuentasBancarias/Delete/:cuentaId', cors({
+router.delete('/api/CuentasBancarias/Delete/:CuentaID', cors({
     origin: 'http://localhost:8081'
 }), eliminarCuentaBancaria);
 

@@ -12,11 +12,11 @@ const obtenerCuentasBancarias = async (req, res) => {
 };
 
 const crearCuentaBancaria = async (req, res) => {
-    const { Cedula, NombreBanco, NumeroCuenta, Saldo } = req.body;
+    const { cedula, nombreBanco, numeroCuenta, saldo } = req.body;
     try {
         const connection = await getConnection();
         const result = await connection.query('INSERT INTO CuentasBancarias (Cedula, NombreBanco, NumeroCuenta, Saldo) VALUES (?, ?, ?, ?)', 
-            [Cedula, NombreBanco, NumeroCuenta, Saldo || 0.00]);
+            [cedula, nombreBanco, numeroCuenta, saldo || 0.00]);
         res.status(201).json({ message: "Cuenta creada con éxito", cuentaId: result.insertId });
     } catch (error) {
         res.status(500).json({ error: "Error al crear la cuenta bancaria" });
@@ -24,10 +24,10 @@ const crearCuentaBancaria = async (req, res) => {
 };
 
 const eliminarCuentaBancaria = async (req, res) => {
-    const { cuentaId } = req.params;
+    const { CuentaID } = req.params;
     try {
         const connection = await getConnection();
-        const result = await connection.query('DELETE FROM CuentasBancarias WHERE CuentaID = ?', [cuentaId]);
+        const result = await connection.query('DELETE FROM CuentasBancarias WHERE CuentaID = ?', [CuentaID]);
         if (result.affectedRows === 0) return res.status(404).json({ error: "Cuenta no encontrada" });
         res.status(204).json();
     } catch (error) {

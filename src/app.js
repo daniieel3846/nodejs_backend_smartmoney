@@ -5,21 +5,24 @@ import cors from 'cors';
 
 const app = express();
 
-//Configuracion puerto
+// Configuración del puerto
 app.set('port', process.env.PORT || 3000);
 
-//Middleware: intermediario entre las peticiones
-app.use(morgan('dev'));
-
-app.use(express.json())
-//Route crear archivo route single responsibility
-//app.get('/saludo', (req,res)=> res.send('ola grupo'));
-app.use(router);
-
-//Config CORS
-const corsOptions={
-    origin: 'http://localhost:8081'
+// Configuración de CORS
+const corsOptions = {
+    origin: 'http://localhost:8081', // Permite solo el frontend en localhost:8081
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
+    allowedHeaders: ['Content-Type', 'Authorization'] // Encabezados permitidos
 };
 app.use(cors(corsOptions));
-//Exportar el modulo
+app.options('*', cors(corsOptions)); // Para solicitudes preflight
+
+// Middleware para logging y JSON
+app.use(morgan('dev'));
+app.use(express.json());
+
+// Rutas - asegúrate de que se cargan después de configurar CORS
+app.use(router);
+
+// Exportar el módulo
 export default app;
